@@ -17,6 +17,8 @@
             <ul>
                 <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#publicaciones">Publicaciones</a></li>
+                <li><a href="#crear">Hacer un Gith</a></li>
+                <li><a href="acerca">Acerca de</a></li>
             </ul>
         </nav> 
     </header>
@@ -52,9 +54,41 @@
                 <p>Por Diego · Proyectos</p>
                 <p>Quiero crear un juego que sume puntos al completar retos.</p>
                 <p>Me gusta: 0</p>
-            </article>
+            </article> 
+        </section>
 
+        <section id="crear">
+            <h2>Hacer un Gith</h2>
 
+            <form id="formulario-gith">
+                <p>
+                    <label for="titulo-gith">Título del Gith</label>
+                    <input type="text" id="titulo-gith" name="titulo" maxlength="80" required>
+                </p>
+
+                <p>
+                    <label for="categoria-gith">Categorías</label>
+                    <select id="categoria-gith" name="categoria" required>
+                        <option value="">Elige una categoria</option>
+                        <option value="programacion">Programación</option>
+                        <option value="videojuegos">Videojuegos</option>
+                        <option value="proyectos">Proyectos</option>
+                    </select>
+                </p>
+
+                <p>
+                    <label for="contenido-gith">Contenido</label>
+                    <textarea id="contenido-gith" name="contenido" rows="5" minlength="5" maxlength="500" required></textarea>
+                </p>
+
+                <button type="submit" disabled>Publicar Gith</button>
+            </form>
+        </section>
+
+        <section id="acerca">
+            <h2>Acerca de Githio</h2>
+            <p>Githio es un espacio para compartir código, proyectos y experiencias de videojuegos.</p>
+            <p>Aquí llamamos Gith a cada publicación.</p>
         </section>
     </main>
 
