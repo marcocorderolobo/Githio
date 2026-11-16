@@ -1,3 +1,7 @@
+html {
+    scroll-padding-top: 80px;
+}
+
 body {
     margin: 0; 
     font-family: Arial, sans-serif;
@@ -5,6 +9,14 @@ body {
     background-color: #f5f7f2;
     color: #202720;
 } 
+
+body > header {
+    padding-top: 80px;
+}
+
+body:has(#menu-lateral[open]) {
+    padding-left: 252px;
+}
 
 header {
     padding: 24px;
@@ -168,13 +180,10 @@ form button:disabled {
     background-color: #b5df55;
 } 
 
-body {
-    padding: 252px; 
-} 
 
 @media (max-width: 700px) {
-    body {
-        padding-left: 0;
+    body, body:has(#menu-lateral[open]) {
+        padding-left: 252px;
     } 
 
     body > header {
