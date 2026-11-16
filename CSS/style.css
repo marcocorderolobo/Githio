@@ -52,4 +52,51 @@ section {
     color: #202720; 
     margin-bottom: 16px;
 
+} 
+
+form {
+    padding: 24px;
+    background-color: white; 
+    border: 1px solid #dde5d8; 
+    border-radius: 12px;
+} 
+
+form label {
+    display: block; 
+    margin-bottom: 6px; 
+    font-weight: bold;
+} 
+
+form input, form select, form textarea {
+    box-sizing: border-box; 
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #a6b49f;
+    border-radius: 6px; 
+    font-family: inherit;
+    font-size: 1rem; 
+} 
+
+form textarea {
+    resize: vertical;
+} 
+
+form button {
+    padding: 12px 20px;
+    background-color: #caf36b;
+    colorL: #202720; 
+    border: none;
+    border-radius: 6px; 
+    font-size: 1rem; 
+    font-weight: bold; 
+    cursor: pointer;
+} 
+
+form button:hover {
+    background-color: #b5bd55;
+} 
+
+form button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
