@@ -44,4 +44,12 @@ section {
     display: block; 
     margin-bottom: 4px;
     font-weight: bold;
+} 
+
+.encabezado-perfil {
+    padding: 0; 
+    background-color: transparent; 
+    color: #202720; 
+    margin-bottom: 16px;
+
 }

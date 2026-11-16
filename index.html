@@ -21,6 +21,7 @@
                 <li><a href="#publicaciones">Publicaciones</a></li>
                 <li><a href="#crear">Hacer un Gith</a></li>
                 <li><a href="#acerca">Acerca de</a></li>
+                <li><a href="#perfil">Perfil</a></li>
             </ul>
         </nav> 
     </header>
@@ -63,6 +64,12 @@
             <h2>Hacer un Gith</h2>
 
             <form id="formulario-gith">
+
+                <p>
+                    <label for="usuario-gith">Nombre del usuario</label>
+                    <input type="text" id="usuario-gith" name="usuario" maxlength="40" required>
+                </p>
+
                 <p>
                     <label for="titulo-gith">Título del Gith</label>
                     <input type="text" id="titulo-gith" name="titulo" maxlength="80" required>
@@ -85,6 +92,25 @@
 
                 <button type="submit" disabled>Publicar Gith</button>
             </form>
+        </section> 
+
+        <section id="perfil">
+            <h2>Mi perfil</h2> 
+
+            <header class="encabezado-perfil">
+                <h3>Marco Kaleb</h3>
+                <p>@marco</p>
+            </header> 
+
+            <p>
+                Estudiante de Desarrollo Web
+                Me gusta aprender programación y compartir mis proyectos
+            </p>
+
+            <ul>
+                <li>Interés principal: Programación</li>
+                <li>Videojuego favorito: Geometry Dash</li>
+            </ul>
         </section>
 
         <section id="acerca">
