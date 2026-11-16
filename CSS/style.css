@@ -84,7 +84,7 @@ form textarea {
 form button {
     padding: 12px 20px;
     background-color: #caf36b;
-    colorL: #202720; 
+    color: #202720; 
     border: none;
     border-radius: 6px; 
     font-size: 1rem; 
@@ -99,4 +99,89 @@ form button:hover {
 form button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+} 
+
+#menu-lateral {
+    position: fixed; 
+    top: 16px; 
+    left: 16px;
+    z-index: 10;
+    width: 220px;
+    box-sizing: border-box;
+    color: #202720;
+} 
+
+#menu-lateral summary {
+    width: fit-content;
+    padding: 10px 16px;
+    background-color: #caf36b;
+    border: 1px solid #a6b49f;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    list-style: none;
+} 
+
+#menu-lateral summary::-webkit-details-marker {
+    display: none;
+} 
+
+#menu-lateral nav {
+    margin-top: 10px;
+    padding: 16px;
+    background-color: white;
+    border: 1px solid #dde5d8;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px #00000020;
+} 
+
+#menu-lateral ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+} 
+
+#menu-lateral li {
+    margin-bottom: 8px;
+} 
+
+#menu-lateral nav a {
+    display: block;
+    padding: 10px;
+    color: #202720;
+    border-radius: 6px;
+    text-decoration: none;
+} 
+
+#menu-lateral nav a:hover {
+    background-color: #edf3e5;
+} 
+
+#menu-lateral nav .boton-publicar {
+    margin-top: 16px;
+    background-color: #caf36b;
+    text-align: center;
+    font-weight: bold;
+} 
+
+#menu-lateral nav .boton-publicar:hover {
+    background-color: #b5df55;
+} 
+
+body {
+    padding: 252px; 
+} 
+
+@media (max-width: 700px) {
+    body {
+        padding-left: 0;
+    } 
+
+    body > header {
+        padding-top: 80px;
+    }
+
+    #menu-lateral {
+        width: min(220px, calc(100vw - 32px));
+    }
 }
