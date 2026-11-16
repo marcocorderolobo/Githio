@@ -22,6 +22,8 @@
                 <li><a href="#crear">Hacer un Gith</a></li>
                 <li><a href="#acerca">Acerca de</a></li>
                 <li><a href="#perfil">Perfil</a></li>
+                <li><a href="#acceso">Iniciar Sesión</a></li>
+                <li><a href="#registro">Crear cuenta</a></li>
             </ul>
         </nav> 
     </header>
@@ -113,10 +115,69 @@
             </ul>
         </section>
 
+        <section id="acceso">
+            <h2>Iniciar Sesión</h2>
+            <p>Vuelve a compartir con tu comunidad.</p>
+
+            <form id="formulario-acceso">
+                <p>
+                    <label for="acceso-usuario">Nombre de usuario</label>
+                    <input type="text" id="acceso-usuario" name="usuario" autocomplete="username" required>
+                </p> 
+
+                <p>
+                    <label for="acceso-contrasena">Contraseña</label>
+                    <input type="password" id="acceso-contrasena" name="contrasena" autocomplete="current-password" required> 
+                </p>
+
+                <button type="submit">Iniciar Sesión</button>
+            </form>
+
+            <p>¿Eres nuevo en githio? <a href="#registro">Crea tu cuenta</a></p>
+
+        </section>
+
         <section id="acerca">
             <h2>Acerca de Githio</h2>
             <p>Githio es un espacio para compartir código, proyectos y experiencias de videojuegos.</p>
             <p>Aquí llamamos Gith a cada publicación.</p>
+        </section>
+
+        <section id="registro">
+            <h2>Crear cuenta</h2>
+            <p>Un lugar para tus ideas, proyectos y partidas.</p>
+
+            <form id="formulario-registro">
+                <p>
+                    <label for="registro-nombre">Nombre para mostrar</label>
+                    <input type="text" id="registro-nombre" name="nombre" maxlength="40" autocomplete="nickname" required>
+                </p>
+
+                <p>
+                    <label for="registro-usuario">Nombre de usuario</label>
+                    <input type="text" id="registro-usuario" name="usuario" minlength="3" maxlength="20" pattern="[A-Za z0-0_] {3,20}" autocomplete="username" aria-describedby="ayuda-usuario" required>
+                </p> 
+
+                <p id="ayuda-usuario">
+                    Usa entre 3 y 20 letras, números o guión bajo
+                </p> 
+
+                <p>
+                    <label for="registro-contrasena">Contraseña</label>
+                    <input type="password" id="registro-contrasena" name="contrasena" minlength="6" autocomplete="new-password" required>
+                </p>
+
+                <p>
+                    <label for="registro-confirmacion">Repetir contraseña</label>
+                    <input type="password" id="registro-confirmacion" name="confirmacion" minlength="6" autocomplete="new-password" required>
+                </p> 
+
+                <button type="submit" disabled>Crear cuenta</button>
+
+                <p>¿Ya tienes cuenta? <a href="#acceso">Inicia Sesión</a></p>
+
+            </form>
+
         </section>
     </main>
 
