@@ -427,6 +427,73 @@ footer a:hover {
 
 #acerca p:last-child {
     margin-bottom: 0;
+} 
+
+#archivos-gith {
+    background-color: #f5f7f2;
+} 
+
+#archivos-gith::file-selector-button {
+    margin-right: 12px;
+    padding: 8px 12px;
+    background-color: #caf36b;
+    color: #202720;
+    border: none;
+    border-radius: 6px;
+    font-family: inherit;
+    font-weight: bold;
+    cursor: pointer;
+} 
+
+#archivos-gith::file-selector-button:hover {
+    background-color: #b5df55;
+} 
+
+#ayuda-archivos {
+    font-size: 0.85rem;
+    color: #617052;
+} 
+
+#foto-perfil {
+    box-sizing: border-box;
+    width: 100%; 
+    padding: 10px;
+    background-color: #f5f7f2;
+    border: 1px solid #a6b49f;
+    border-radius: 6px;
+    font-family: inherit;
+} 
+
+#foto-perfil::file-selector-button {
+    margin-right: 12px; 
+    padding: 8px 12px;
+    background-color: #caf36b;
+    color: #202720;
+    border: none;
+    border-radius: 6px;
+    font-family: inherit;
+    font-weight: bold;
+    cursor: pointer;
+} 
+
+#foto-perfil::file-selector-button:hover {
+    background-color: #b5df55;
+} 
+
+#ayuda-foto-perfil {
+    font-size: 0.85rem;
+    color: #617052;
+} 
+
+label[for="foto-perfil"] {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+} 
+
+#foto-perfil:focus {
+    outline: 2px solid #365d24;
+    outline-offset: 2px;
 }
 
 

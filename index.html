@@ -130,6 +130,15 @@
                 <p>
                     <label for="contenido-gith">Contenido</label>
                     <textarea id="contenido-gith" name="contenido" rows="5" minlength="5" maxlength="500" required></textarea>
+                </p> 
+
+                <p>
+                    <label for="archivos-gith">Adjuntar imágenes, videos o archivos</label>
+                    <input type="file" id="archivos-gith" name="archivos" multiple aria-describedby="ayuda-archivos"> 
+                </p>
+
+                <p id="ayuda-archivos">
+                    Puedes adjuntar varios archivos, hasta un máximo total de 300 MB por Gith
                 </p>
 
                 <button type="submit" disabled>Publicar Gith</button>
@@ -142,6 +151,14 @@
             <header class="encabezado-perfil">
                 <h3>Marco Kaleb</h3>
                 <p>@marco</p>
+                <p>
+                    <label for="foto-perfil">Cambiar foto de perfil</label>
+                    <input type="file" id="foto-perfil" name="foto-perfil" accept="image/*" aria-describedby="ayuda-foto-perfil">
+                </p> 
+
+                <p id="ayuda-foto-perfil">
+                    Selecciona una imagen para tu perfil
+                </p>
             </header> 
 
             <p>
