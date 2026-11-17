@@ -185,6 +185,10 @@ form button:disabled {
     background-color: #eaf0df;
     border: 1px solid #dfe7d2;
     border-radius: 16px;
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    align-items: center;
+    gap: 32px;
 }
 
 .encabezado-portada {
@@ -227,6 +231,50 @@ form button:disabled {
 
 .boton-explorar:hover {
     background-color: #3d5238;
+} 
+
+.contenido-portada {
+    min-width: 0;
+} 
+
+.ilustracion-portada {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 260px;
+} 
+
+.orbita-portada {
+    position: absolute;
+    width: 230px;
+    height: 230px;
+    border: 1px dashed #aab99a;
+    border-radius: 50%;
+} 
+
+.simbolo-codigo {
+    position: relative;
+    padding: 12px 20px;
+    background-color: #caf36b;
+    color: #25372a;
+    border-radius: 24px;
+    font-family: Consolas, monospace; 
+    font-size: 4rem;
+    font-weight: bold;
+    transform: rotate(-12deg);
+    box-shadow: 10px 12px 0 #25372a;
+} 
+
+.detalle-portada {
+    position: absolute; 
+    top: 20px; 
+    right: 0;
+    padding: 6px 12px;
+    background-color: white;
+    border: 1px solid #dde3d8;
+    border-radius: 6px;
+    font-size: 0.8rem; 
+    transform: rotate(8deg);
 }
 
 
@@ -253,5 +301,13 @@ form button:disabled {
 
     .eslogan {
         font-size: 1.2rem;
+    }
+
+    .portada {
+        grid-template-columns: 1fr;
+    }
+
+    .ilustracion-portada {
+        display: none;
     }
 }
