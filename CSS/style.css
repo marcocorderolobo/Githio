@@ -275,7 +275,55 @@ form button:disabled {
     border-radius: 6px;
     font-size: 0.8rem; 
     transform: rotate(8deg);
+} 
+
+.bienvenida-cuenta {
+    grid-column: 1 / -1; 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 24px;
+    background-color: white;
+    border: 1px solid #dde5d8;
+    border-radius: 12px;
+} 
+
+.bienvenida-cuenta h3 {
+    margin: 0 0 12px;
+    font-size: 1.4rem;
+} 
+
+.bienvenida-cuenta p {
+    margin-top: 0;
+} 
+
+.acciones-bienvenida {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex-shrink: 0; 
+    text-align: center;
+}  
+
+.acciones-bienvenida a {
+    color: #365d24;
 }
+
+.acciones-bienvenida .boton-registro {
+    padding: 12px 20px; 
+    background-color: #caf36b;
+    color: #202720;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+} 
+
+.acciones-bienvenida .boton-registro:hover {
+    background-color: #b5df55;
+}
+
+
 
 
 @media (max-width: 700px) {
@@ -306,6 +354,21 @@ form button:disabled {
     .portada {
         grid-template-columns: 1fr;
     }
+
+    .ilustracion-portada {
+        display: none;
+    } 
+
+    .bienvenida-cuenta {
+        flex-direction: column;
+        align-items: stretch;
+    }
+} 
+
+@media (max-width: 1000px) {
+    .portada {
+        grid-template-columns: 1fr;
+    } 
 
     .ilustracion-portada {
         display: none;

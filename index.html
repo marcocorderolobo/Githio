@@ -35,25 +35,46 @@
 
     <main>
         <section id="inicio" class="portada">
-            <header class="encabezado-portada">
-
-                <p class="etiqueta-portada">PROGRAMA. JUEGA. COMPARTE.</p>
-
-                <h2>Bienvenido a Githio</h2>
-
-                <p class="eslogan">Donde el código y el juego se conectan</p>
-            </header>
-            <p>
-                Un espacio para compartir código, proyectos y
-                experiencias de videojuegos.
-            </p> 
-            <a href="#publicaciones" class="boton-explorar">Explorar los Giths →</a>
+            <div class="contenido-portada">
+                <header class="encabezado-portada">
+    
+                    <p class="etiqueta-portada">PROGRAMA. JUEGA. COMPARTE.</p>
+    
+                    <h2>Bienvenido a Githio</h2>
+    
+                    <p class="eslogan">Donde el código y el juego se conectan</p>
+                </header>
+                <p>
+                    Un espacio para compartir código, proyectos y
+                    experiencias de videojuegos.
+                </p> 
+                <a href="#publicaciones" class="boton-explorar">Explorar los Giths →</a>
+            </div>
 
             <div class="ilustracion-portada" aria-hidden="true">
                 <span class="orbita-portada"></span>
                 <span class="simbolo-codigo">&lt;/&gt;</span>
                 <span class="detalle-portada">+1 idea</span>
             </div>
+
+            <aside class="bienvenida-cuenta">
+                <div>
+                    <p class="etiqueta-portada">¿ERES NUEVO POR AQUÍ?</p>
+
+                    <h3>Tu primera idea ya tiene un lugar</h3>
+
+                    <p>
+                        Explora la comunidad y crea tu cuenta cuando quieras
+                        compartir tus propios Giths
+                    </p>
+                </div> 
+
+                <div class="acciones-bienvenida">
+                    <a href="#registro" class="boton-registro">Crear mi cuenta →</a>
+
+                    <a href="#acceso">Ya tengo cuenta</a>
+                </div>
+            </aside>
         </section>
 
         <section id="publicaciones"> 
@@ -174,7 +195,7 @@
 
                 <p>
                     <label for="registro-usuario">Nombre de usuario</label>
-                    <input type="text" id="registro-usuario" name="usuario" minlength="3" maxlength="20" pattern="[A-Za z0-9_] {3,20}" autocomplete="username" aria-describedby="ayuda-usuario" required>
+                    <input type="text" id="registro-usuario" name="usuario" minlength="3" maxlength="20" pattern="[A-Za-z0-9_]{3,20}" autocomplete="username" aria-describedby="ayuda-usuario" required>
                 </p> 
 
                 <p id="ayuda-usuario">
