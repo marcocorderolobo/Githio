@@ -183,7 +183,7 @@ form button:disabled {
 
 @media (max-width: 700px) {
     body, body:has(#menu-lateral[open]) {
-        padding-left: 252px;
+        padding-left: 0;
     } 
 
     body > header {
