@@ -8,12 +8,13 @@
     <script src="JS/app.js" defer></script>
 </head>
 <body>
-    
+    <!-- Encabezado principal: donde está el nombre y eslogan -->
     <header>
         
         <h1>Githio</h1> 
         <p>Donde el código y el juego conectan.</p>
 
+        <!-- Menú lateral desplegable -->
         <details id="menu-lateral">
             <summary>☰ Menú</summary>
 
@@ -34,6 +35,7 @@
     </header>
 
     <main>
+        <!-- Inicio: bienvenida y presentación -->
         <section id="inicio" class="portada">
             <div class="contenido-portada">
                 <header class="encabezado-portada">
@@ -51,12 +53,14 @@
                 <a href="#publicaciones" class="boton-explorar">Explorar los Giths →</a>
             </div>
 
+            <!-- Ilustración decorativa de la portada -->
             <div class="ilustracion-portada" aria-hidden="true">
                 <span class="orbita-portada"></span>
                 <span class="simbolo-codigo">&lt;/&gt;</span>
                 <span class="detalle-portada">+1 idea</span>
             </div>
 
+            <!-- Invitación para crear una cuenta o iniciar sesión -->
             <aside class="bienvenida-cuenta">
                 <div>
                     <p class="etiqueta-portada">¿ERES NUEVO POR AQUÍ?</p>
@@ -77,6 +81,7 @@
             </aside>
         </section>
 
+        <!-- Publicaciones: Giths, filtros y acciones como los botones de me gusta, guardar y eliminar -->
         <section id="publicaciones"> 
             <h2>Publicaciones</h2>
 
@@ -87,6 +92,7 @@
                 para dar me gusta, guardar y publicar
             </p>
 
+            <!-- Este selector permite seleccionar la categoría que quiere filtrar el usuario -->
             <p class="filtro-publicaciones"> 
                 <label for="filtro-categoria">Filtrar por categoría</label>
 
@@ -151,6 +157,7 @@
             </article> 
         </section>
 
+        <!-- Sección para poder crear una publicación llamada Gith -->
         <section id="crear">
             <h2>Hacer un Gith</h2>
 
@@ -194,6 +201,7 @@
             </form>
         </section> 
 
+        <!-- El perfil donde se muestra la información de la cuenta, como su foto de perfil, nombre y descripción  -->
         <section id="perfil">
             <h2>Mi perfil</h2> 
 
@@ -222,6 +230,7 @@
             </ul>
         </section>
 
+        <!-- Acceso: Un formulario donde permite iniciar sesión -->
         <section id="acceso">
             <h2>Iniciar Sesión</h2>
             <p>Vuelve a compartir con tu comunidad.</p>
@@ -244,12 +253,14 @@
 
         </section>
 
+        <!-- Acerca de: Aquí se muestra cualñ es el proposito de Githio/comunidad -->
         <section id="acerca">
             <h2>Acerca de Githio</h2>
             <p>Githio es un espacio para compartir código, proyectos y experiencias de videojuegos.</p>
             <p>Aquí llamamos Gith a cada publicación.</p>
         </section>
 
+        <!-- Un formulario donde permite crear cuentas -->
         <section id="registro">
             <h2>Crear cuenta</h2>
             <p>Un lugar para tus ideas, proyectos y partidas.</p>
@@ -288,6 +299,7 @@
         </section>
     </main>
 
+    <!-- El pie de página -->
     <footer>
         <p>Githio · Desarrollo Web</p>
         <a href="#inicio">Volver al inicio</a>

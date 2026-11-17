@@ -1,3 +1,4 @@
+/* Le agregamos estilos generales a la página */
 html {
     scroll-padding-top: 80px;
 }
@@ -18,6 +19,7 @@ body:has(#menu-lateral[open]) {
     padding-left: 252px;
 }
 
+/* Le agregamos estilo a los encabezados y enlaces del encabezado */
 header {
     padding: 24px;
     background-color: #25372a; 
@@ -28,6 +30,7 @@ header a {
     color: #caf36b;
 } 
 
+/* Hacemos una distribución del contenido principal */
 main {
     max-width: 760px;
     margin: 0 auto;
@@ -38,6 +41,7 @@ section {
     margin-bottom: 32px;
 }
 
+/* Hacemos tipo tarjetas a las publicaciones */
 #publicaciones article {
     margin-bottom: 16px;
     padding: 16px; 
@@ -66,6 +70,7 @@ section {
 
 } 
 
+/* Agregamos estilos compartidos con los formularios */
 form {
     padding: 24px;
     background-color: white; 
@@ -113,6 +118,7 @@ form button:disabled {
     cursor: not-allowed;
 } 
 
+/* Hacemos un menú lateral que pueda ser desplegable */
 #menu-lateral {
     position: fixed; 
     top: 16px; 
@@ -180,6 +186,7 @@ form button:disabled {
     background-color: #b5df55;
 } 
 
+/* Le agregamos estilo a la portada y bienvenida */
 .portada {
     padding: 40px;
     background-color: #eaf0df;
@@ -323,6 +330,7 @@ form button:disabled {
     background-color: #b5df55;
 } 
 
+/* Le agregamos estilo a las secciones de acceso y registro */
 #acceso, #registro {
     max-width: 480px;
     margin: 0 auto 32px;
@@ -360,6 +368,7 @@ form input:focus, form select:focus, form textarea:focus {
     outline-offset: 2px;
 } 
 
+/* Le agregamos estilo como color y un fondo de color al pie de página */
 footer {
     padding: 24px;
     background-color: #25372a;
@@ -380,6 +389,7 @@ footer a:hover {
     color:white;
 } 
 
+/* Hacemos la presentación del perfil */
 #perfil {
     padding: 24px;
     background-color: white;
@@ -414,6 +424,7 @@ footer a:hover {
     margin-bottom: 0;
 } 
 
+/* Le agregamos estilos a la información sobre Githio */
 #acerca {
     padding: 24px;
     background-color: #eaf0df;
@@ -429,6 +440,7 @@ footer a:hover {
     margin-bottom: 0;
 } 
 
+/* Le agregamos estilos, color y fondo de color al selector de archivos */
 #archivos-gith {
     background-color: #f5f7f2;
 } 
@@ -454,6 +466,7 @@ footer a:hover {
     color: #617052;
 } 
 
+/* Le agregamos estilos a la foto de perfil */
 #foto-perfil {
     box-sizing: border-box;
     width: 100%; 
@@ -496,6 +509,7 @@ label[for="foto-perfil"] {
     outline-offset: 2px;
 } 
 
+/* Le agregamos estilo a las imagenes que se verán en las publicaciones */
 .imagen-gith {
     display: block;
     max-width: 100%;
@@ -504,6 +518,7 @@ label[for="foto-perfil"] {
     border-radius: 8px;
 } 
 
+/* Agregamos estilo y hacemos circular la foto de perfil */
 .avatar-perfil {
     display: block; 
     width: 96px;
@@ -513,6 +528,7 @@ label[for="foto-perfil"] {
     margin-bottom: 16px;
 } 
 
+/* Modificamos los botones de las publicaciones */
 .acciones-gith {
     display: flex;
     flex-wrap: wrap;
@@ -540,6 +556,7 @@ label[for="foto-perfil"] {
     cursor: not-allowed;
 } 
 
+/* Le agregamos estilo al aviso para visitantes */
 .aviso-cuenta {
     padding: 12px 16px;
     background-color: #eaf0df;
@@ -552,6 +569,7 @@ label[for="foto-perfil"] {
     font-weight: bold;
 } 
 
+/* Le agregamos estilos al filtro de las publicaciones por categoría */
 .filtro-publicaciones {
     display: flex; 
     align-items: center; 
@@ -580,6 +598,7 @@ label[for="foto-perfil"] {
     outline-offset: 2px;
 } 
 
+/* Le damos apariencia al botón de eliminar un Gith */
 .acciones-gith .boton-eliminar {
     background-color: #fff0ed;
     color: #9b3024;
@@ -590,8 +609,7 @@ label[for="foto-perfil"] {
     background-color: #f8d6d0;
 }
 
-
-
+/* Ajustes para pantallas de hasta 700 pixeles */
 @media (max-width: 700px) {
     body, body:has(#menu-lateral[open]) {
         padding-left: 0;
@@ -631,6 +649,7 @@ label[for="foto-perfil"] {
     }
 } 
 
+/* Ajuste y simplificación de la portada en pantallas de hasta 1000 pixeles */
 @media (max-width: 1000px) {
     .portada {
         grid-template-columns: 1fr;
