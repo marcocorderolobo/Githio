@@ -180,6 +180,55 @@ form button:disabled {
     background-color: #b5df55;
 } 
 
+.portada {
+    padding: 40px;
+    background-color: #eaf0df;
+    border: 1px solid #dfe7d2;
+    border-radius: 16px;
+}
+
+.encabezado-portada {
+    padding: 0; 
+    background-color: transparent; 
+    color: #202720;
+} 
+
+.etiqueta-portada {
+    margin: 0 0 16px; 
+    font-size: 0.75rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #617052;
+} 
+
+.portada h2 {
+    margin: 0 0 20px;
+    font-size: 2.75rem;
+    line-height: 1.15;
+} 
+
+.eslogan {
+    margin: 0 0 18px; 
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #588127;
+} 
+
+.boton-explorar {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 12px 20px;
+    background-color: #25372a;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+} 
+
+.boton-explorar:hover {
+    background-color: #3d5238;
+}
+
 
 @media (max-width: 700px) {
     body, body:has(#menu-lateral[open]) {
@@ -192,5 +241,17 @@ form button:disabled {
 
     #menu-lateral {
         width: min(220px, calc(100vw - 32px));
+    }
+
+    .portada {
+        padding: 24px;
+    } 
+
+    .portada h2 {
+        font-size: 2rem;
+    } 
+
+    .eslogan {
+        font-size: 1.2rem;
     }
 }
