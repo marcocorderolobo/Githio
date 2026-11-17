@@ -87,7 +87,18 @@
                 para dar me gusta, guardar y publicar
             </p>
 
-            <article>
+            <p class="filtro-publicaciones"> 
+                <label for="filtro-categoria">Filtrar por categoría</label>
+
+                <select id="filtro-categoria" name="filtro-categoria">
+                    <option value="todas">Todas las categorías</option>
+                    <option value="programacion">Programación</option>
+                    <option value="videojuegos">Videojuegos</option>
+                    <option value="proyectos">Proyectos</option>
+                </select>
+            </p>
+
+            <article data-categoria="programacion">
                 <h3>Mi primer proyecto con Git</h3>
                 <p>Por Marco · Programación</p>
                 <p>Hoy creé mi primer repositorio y guardé mi avance con un commit.</p>
@@ -101,7 +112,7 @@
                 </div>
             </article> 
 
-            <article>
+            <article data-categoria="videojuegos">
                 <h3>Una casa medieval para Minecraft</h3>
                 <p>Por Luna · Videojuegos</p> 
                 <p>Doy una idea para contruir una casa tipo medieval, combinando materiales como la madera, piedra y un pequeño establo. ¡Espero que les guste!</p>
@@ -116,7 +127,7 @@
                 </div>
             </article> 
 
-            <article>
+            <article data-categoria="proyectos">
                 <h3>Mi idea para un minijuego</h3>
                 <p>Por Diego · Proyectos</p>
                 <p>Quiero crear un juego que sume puntos al completar retos.</p>

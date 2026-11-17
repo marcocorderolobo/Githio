@@ -549,6 +549,34 @@ label[for="foto-perfil"] {
 .aviso-cuenta a {
     color: inherit;
     font-weight: bold;
+} 
+
+.filtro-publicaciones {
+    display: flex; 
+    align-items: center; 
+    flex-wrap: wrap; 
+    gap: 12px;
+    margin-bottom: 24px;
+} 
+
+.filtro-publicaciones label {
+    font-weight: bold;
+} 
+
+#filtro-categoria {
+    max-width: 100%;
+    padding: 10px;
+    background-color: white;
+    color: #202720;
+    border: 1px solid #a6b49f;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 1rem;
+} 
+
+#filtro-categoria:focus {
+    outline: 2px solid #365d24;
+    outline-offset: 2px;
 }
 
 
