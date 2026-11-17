@@ -523,6 +523,7 @@ label[for="foto-perfil"] {
 .acciones-gith button {
     padding: 8px 12px; 
     background-color: #edf3e5;
+    color: #365d24;
     border: 1px solid #a6b49f;
     border-radius: 8px;
     font-family: inherit;
@@ -577,6 +578,16 @@ label[for="foto-perfil"] {
 #filtro-categoria:focus {
     outline: 2px solid #365d24;
     outline-offset: 2px;
+} 
+
+.acciones-gith .boton-eliminar {
+    background-color: #fff0ed;
+    color: #9b3024;
+    border-color: #d8a39c;
+} 
+
+.acciones-gith .boton-eliminar:enabled:hover {
+    background-color: #f8d6d0;
 }
 
 
