@@ -321,8 +321,44 @@ form button:disabled {
 
 .acciones-bienvenida .boton-registro:hover {
     background-color: #b5df55;
+} 
+
+#acceso, #registro {
+    max-width: 480px;
+    margin: 0 auto 32px;
+} 
+
+#accesp > h2, #registro > h2 {
+    margin-bottom: 8px;
 }
 
+
+
+#acceso > p, #registro > p {
+    margin-top: 0;
+    color: #617052;
+}
+ 
+
+#ayuda-usuario {
+    font-size: 0.85rem;
+    color: #617052;
+} 
+
+#acceso a, #registro a {
+    color: #365d24;
+} 
+
+#formulario-acceso button, #formulario-registro button {
+    width: 100%;
+    margin-top: 8px;
+} 
+
+form input:focus, form select:focus, form textarea:focus {
+    border-color: #365d24;
+    outline: 2px solid #365d24;
+    outline-offset: 2px;
+}
 
 
 
