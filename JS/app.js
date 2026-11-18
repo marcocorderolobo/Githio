@@ -3,6 +3,7 @@ const giths = [];
 
 const formulario = document.querySelector("#formulario-gith");
 const publicaciones = document.querySelector("#publicaciones");
+const listaGiths = document.querySelector("#lista-giths");
 
 const campoUsuario = document.querySelector("#usuario-gith");
 const campoTitulo = document.querySelector("#titulo-gith");
@@ -29,6 +30,7 @@ formulario.addEventListener("submit", function (evento) {
         titulo: titulo,
         contenido: contenido,
         categoria: categoria,
+        categoriaValor: categoriaValor,
         meGusta: 0
     };
 
@@ -36,10 +38,7 @@ formulario.addEventListener("submit", function (evento) {
     giths.push(nuevoGith);
 
     // Crear el articulo y su contenido
-    const gith = crearArticuloGith(nuevoGith, categoriaValor);
-
-    publicaciones.append(gith);
-    filtrarPublicaciones();
+    mostrarGiths();
 
     formulario.reset();
     window.location.hash = "#publicaciones";
@@ -91,9 +90,9 @@ filtroCategoria.addEventListener("change", filtrarPublicaciones);
 filtrarPublicaciones();
 
 // Construye un artículo a partir de los datos de un Gith 
-function crearArticuloGith(nuevoGith, categoriaValor) {
+function crearArticuloGith(nuevoGith) {
     const gith = document.createElement("article"); 
-    gith.dataset.categoria = categoriaValor;
+    gith.dataset.categoria = nuevoGith.categoriaValor;
 
     const encabezado = document.createElement("h3");
     encabezado.textContent = nuevoGith.titulo; 
@@ -141,5 +140,18 @@ function crearArticuloGith(nuevoGith, categoriaValor) {
 
     gith.append(encabezado, datos, texto, acciones);
 
-    return gith;
+    return gith; 
+} 
+
+// Actualiza la lista con las publicaciones del arreglo
+
+function mostrarGiths() {
+    listaGiths.replaceChildren();
+
+    giths.forEach(function (datosGith) {
+        const articulo = crearArticuloGith(datosGith);
+        listaGiths.append(articulo);
+    });
+
+    filtrarPublicaciones();
 }
