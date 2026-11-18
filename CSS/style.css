@@ -607,6 +607,10 @@ label[for="foto-perfil"] {
 
 .acciones-gith .boton-eliminar:enabled:hover {
     background-color: #f8d6d0;
+} 
+
+.vista[hidden] {
+    display: none;
 }
 
 /* Ajustes para pantallas de hasta 700 pixeles */

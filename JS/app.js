@@ -87,7 +87,31 @@ formulario.addEventListener("submit", function (evento) {
     publicaciones.append(gith);
 
     formulario.reset();
-    publicaciones.scrollIntoView();
+    window.location.hash = "#publicaciones";
 });
 
-formulario.querySelector('button[type="submit"]').disabled = false;
+formulario.querySelector('button[type="submit"]').disabled = false; 
+
+// Secciones que funcionan como apartados
+const vistas = document.querySelectorAll(".vista");
+
+// Muestra el apartadp indicado por el enlace
+function mostrarVista() {
+    const destino = window.location.hash || "#inicio";
+    // Comprueba que el destino corresponda a una vista
+    const existe = Array.from(vistas).some(function (vista) {
+        return "#" + vista.id === destino;
+    });
+
+    const vistaActiva = existe ? destino : "#inicio";
+
+    vistas.forEach(function (vista) {
+        vista.hidden = "#" + vista.id !== vistaActiva;
+    }); 
+} 
+
+// Actualiza el apartado cuando cambia el enlace 
+window.addEventListener("hashchange", mostrarVista);
+
+// Selecciona el apartado inicial al cargar 
+mostrarVista()
