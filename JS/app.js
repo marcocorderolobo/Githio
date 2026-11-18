@@ -85,6 +85,7 @@ formulario.addEventListener("submit", function (evento) {
 
     gith.append(encabezado, datos, texto, acciones);
     publicaciones.append(gith);
+    filtrarPublicaciones();
 
     formulario.reset();
     window.location.hash = "#publicaciones";
@@ -114,4 +115,23 @@ function mostrarVista() {
 window.addEventListener("hashchange", mostrarVista);
 
 // Selecciona el apartado inicial al cargar 
-mostrarVista()
+mostrarVista() 
+
+// Selector del filtro de categorías 
+const filtroCategoria = document.querySelector("#filtro-categoria"); 
+
+// Muestra únicamente las publicaciones de la categoría elegida
+function filtrarPublicaciones() {
+    const categoriaElegida = filtroCategoria.value;
+    const articulos = publicaciones.querySelectorAll("article");
+
+    articulos.forEach(function (articulo) {
+        articulo.hidden = categoriaElegida !== "todas" && articulo.dataset.categoria !== categoriaElegida;
+    }); 
+} 
+
+// Aplica el filtro cuando cambia la selección
+filtroCategoria.addEventListener("change", filtrarPublicaciones);
+
+// Aplica la selección inicial 
+filtrarPublicaciones();
