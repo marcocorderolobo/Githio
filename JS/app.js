@@ -325,9 +325,7 @@ function crearArticuloGith(nuevoGith) {
     return gith;
 }
 
-
 // Actualiza la lista con las publicaciones del arreglo
-
 function mostrarGiths() {
     listaGiths.replaceChildren();
 
@@ -591,7 +589,3 @@ document.querySelector("#cerrar-sesion")
         window.location.hash = "#inicio";
         actualizarInterfazSesion();
     });
-
-
-
-
