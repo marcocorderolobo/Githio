@@ -638,6 +638,28 @@ label[for="foto-perfil"] {
     flex-shrink: 0;
 }
 
+/* Videos adjuntos a los Giths */
+video.imagen-gith {
+    width: 100%;
+    background-color: #202720;
+} 
+
+/* Botón para cerrar sesión */
+#cerrar-sesion {
+    padding: 10px 16px;
+    background-color: #25372a;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+#cerrar-sesion:hover {
+    background-color: #3d5238;
+}
+
 /* Ajustes para pantallas de hasta 700 pixeles */
 @media (max-width: 700px) {
     body, body:has(#menu-lateral[open]) {

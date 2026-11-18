@@ -8,7 +8,7 @@ const usuarios = [];
 let usuarioActual = null;
 
 // Formulario de registro y sus campos
-const formularioRegistro = document.querySelector("#formulario-registro"); 
+const formularioRegistro = document.querySelector("#formulario-registro");
 const registroNombre = document.querySelector("#registro-nombre");
 const registroUsuario = document.querySelector("#registro-usuario");
 const registroContrasena = document.querySelector("#registro-contrasena");
@@ -22,6 +22,7 @@ const campoUsuario = document.querySelector("#usuario-gith");
 const campoTitulo = document.querySelector("#titulo-gith");
 const campoCategoria = document.querySelector("#categoria-gith");
 const campoContenido = document.querySelector("#contenido-gith");
+const campoArchivos = document.querySelector("#archivos-gith");
 
 formulario.addEventListener("submit", function (evento) {
     evento.preventDefault();
@@ -42,7 +43,28 @@ formulario.addEventListener("submit", function (evento) {
     if (usuario === "" || titulo === "" || contenido.length < 5) {
         alert("Escribe un usuario, un título y al menos 5 caracteres de contenido.");
         return;
-    } 
+    }
+
+    // Comprueba el tamaño total de los archivos seleccionados
+    const archivosSeleccionados = Array.from(campoArchivos.files);
+
+    const totalArchivos = archivosSeleccionados.reduce(function (total, archivo) {
+        return total + archivo.size;
+    }, 0);
+
+    if (totalArchivos > 300 * 1024 * 1024) {
+        alert("Los archivos superan el máximo total de 300 MB.");
+        return;
+    }
+
+    // Prepara una dirección temporal para mostrar cada archivo
+    const archivos = archivosSeleccionados.map(function (archivo) {
+        return {
+            nombre: archivo.name,
+            tipo: archivo.type,
+            url: URL.createObjectURL(archivo)
+        };
+    });
 
     // Esto agrupa los datos del nuevo Gith
     const nuevoGith = {
@@ -52,6 +74,7 @@ formulario.addEventListener("submit", function (evento) {
         categoria: categoria,
         categoriaValor: categoriaValor,
         meGusta: 0,
+        archivos: archivos,
     };
 
     // Eso agrega la publicación al arreglo
@@ -65,14 +88,19 @@ formulario.addEventListener("submit", function (evento) {
     window.location.hash = "#publicaciones";
 });
 
-formulario.querySelector('button[type="submit"]').disabled = false; 
+formulario.querySelector('button[type="submit"]').disabled = false;
 
 // Secciones que funcionan como apartados
 const vistas = document.querySelectorAll(".vista");
 
 // Muestra el apartadp indicado por el enlace
 function mostrarVista() {
-    const destino = window.location.hash || "#inicio";
+    let destino = window.location.hash || "#inicio";
+
+    if (destino === "#perfil" && usuarioActual === null) {
+        destino = "#acceso";
+        window.location.hash = destino;
+    }
     // Comprueba que el destino corresponda a una vista
     const existe = Array.from(vistas).some(function (vista) {
         return "#" + vista.id === destino;
@@ -82,17 +110,17 @@ function mostrarVista() {
 
     vistas.forEach(function (vista) {
         vista.hidden = "#" + vista.id !== vistaActiva;
-    }); 
-} 
+    });
+}
 
 // Actualiza el apartado cuando cambia el enlace 
 window.addEventListener("hashchange", mostrarVista);
 
 // Selecciona el apartado inicial al cargar 
-mostrarVista(); 
+mostrarVista();
 
 // Selector del filtro de categorías 
-const filtroCategoria = document.querySelector("#filtro-categoria"); 
+const filtroCategoria = document.querySelector("#filtro-categoria");
 
 // Muestra únicamente las publicaciones de la categoría elegida
 function filtrarPublicaciones() {
@@ -101,8 +129,8 @@ function filtrarPublicaciones() {
 
     articulos.forEach(function (articulo) {
         articulo.hidden = categoriaElegida !== "todas" && articulo.dataset.categoria !== categoriaElegida;
-    }); 
-} 
+    });
+}
 
 // Aplica el filtro cuando cambia la selección
 filtroCategoria.addEventListener("change", filtrarPublicaciones);
@@ -112,20 +140,20 @@ filtrarPublicaciones();
 
 // Construye un artículo a partir de los datos de un Gith 
 function crearArticuloGith(nuevoGith) {
-    const gith = document.createElement("article"); 
+    const gith = document.createElement("article");
     gith.dataset.categoria = nuevoGith.categoriaValor;
 
     const encabezado = document.createElement("h3");
-    encabezado.textContent = nuevoGith.titulo; 
+    encabezado.textContent = nuevoGith.titulo;
 
     // Foto y nombre del autor
     const datos = document.createElement("div");
     datos.className = "autor-gith";
-    
+
     const cuentaAutor = usuarios.find(function (cuenta) {
         return cuenta.usuario === nuevoGith.usuario;
     });
-    
+
     const fotoAutor = document.createElement("img");
     fotoAutor.className = "foto-autor";
     fotoAutor.src =
@@ -133,76 +161,95 @@ function crearArticuloGith(nuevoGith) {
             ? cuentaAutor.foto
             : fotoPredeterminada;
     fotoAutor.alt = "Avatar de " + nuevoGith.usuario;
-    
+
     const nombreAutor = document.createElement("p");
     nombreAutor.textContent =
         "Por " + nuevoGith.usuario + " · " + nuevoGith.categoria;
-    
+
     datos.append(fotoAutor, nombreAutor);
 
     const texto = document.createElement("p");
-    texto.textContent = nuevoGith.contenido; 
+    texto.textContent = nuevoGith.contenido;
 
     // Contenedor de los botones
     const acciones = document.createElement("div");
     acciones.className = "acciones-gith";
 
-    // Botón de me gusta
+    // Usuarios que dieron me gusta
+    if (!nuevoGith.gustos) {
+        nuevoGith.gustos = [];
+    }
 
+    // Botón de me gusta
     const botonMeGusta = document.createElement("button");
     botonMeGusta.type = "button";
     botonMeGusta.className = "boton-me-gusta";
     botonMeGusta.disabled = usuarioActual === null;
-    botonMeGusta.textContent = "Me gusta : "; 
+    botonMeGusta.textContent = "Me gusta: ";
 
-    // Contador dentro del botón 
+    const tieneMeGusta =
+        usuarioActual !== null &&
+        nuevoGith.gustos.includes(usuarioActual.usuario);
+
+    botonMeGusta.setAttribute("aria-pressed", String(tieneMeGusta));
+
+    // Contador dentro del botón
     const contador = document.createElement("span");
     contador.className = "contador-me-gusta";
-    contador.textContent = nuevoGith.meGusta; 
+    contador.textContent = nuevoGith.gustos.length;
 
-    // Aumenta los me gusta y actualiza el contador
+    // Agrega o retira el me gusta de la cuenta actual
     botonMeGusta.addEventListener("click", function () {
-    if (usuarioActual === null) {
-        return;
-    }
+        if (usuarioActual === null) {
+            return;
+        }
 
-    nuevoGith.meGusta += 1;
-    contador.textContent = nuevoGith.meGusta;
+        const posicion =
+            nuevoGith.gustos.indexOf(usuarioActual.usuario);
+
+        if (posicion === -1) {
+            nuevoGith.gustos.push(usuarioActual.usuario);
+        } else {
+            nuevoGith.gustos.splice(posicion, 1);
+        }
+
+        nuevoGith.meGusta = nuevoGith.gustos.length;
+        mostrarGiths();
     });
 
     // Usuarios que guardaron esta publicación
-if (!nuevoGith.guardados) {
-    nuevoGith.guardados = [];
-}
-
-// Botón para guardar
-const botonGuardar = document.createElement("button");
-botonGuardar.type = "button";
-botonGuardar.className = "boton-guardar";
-botonGuardar.disabled = usuarioActual === null;
-
-const estaGuardado =
-    usuarioActual !== null &&
-    nuevoGith.guardados.includes(usuarioActual.usuario);
-
-botonGuardar.textContent = estaGuardado ? "Guardado ✓" : "Guardar";
-
-botonGuardar.addEventListener("click", function () {
-    if (usuarioActual === null) {
-        return;
+    if (!nuevoGith.guardados) {
+        nuevoGith.guardados = [];
     }
 
-    const posicion =
-        nuevoGith.guardados.indexOf(usuarioActual.usuario);
+    // Botón para guardar
+    const botonGuardar = document.createElement("button");
+    botonGuardar.type = "button";
+    botonGuardar.className = "boton-guardar";
+    botonGuardar.disabled = usuarioActual === null;
 
-    if (posicion === -1) {
-        nuevoGith.guardados.push(usuarioActual.usuario);
-    } else {
-        nuevoGith.guardados.splice(posicion, 1);
-    }
+    const estaGuardado =
+        usuarioActual !== null &&
+        nuevoGith.guardados.includes(usuarioActual.usuario);
 
-    mostrarGiths();
-});
+    botonGuardar.textContent = estaGuardado ? "Guardado ✓" : "Guardar";
+
+    botonGuardar.addEventListener("click", function () {
+        if (usuarioActual === null) {
+            return;
+        }
+
+        const posicion =
+            nuevoGith.guardados.indexOf(usuarioActual.usuario);
+
+        if (posicion === -1) {
+            nuevoGith.guardados.push(usuarioActual.usuario);
+        } else {
+            nuevoGith.guardados.splice(posicion, 1);
+        }
+
+        mostrarGiths();
+    });
 
     // Botón para eliminar 
     const botonEliminar = document.createElement("button");
@@ -211,37 +258,73 @@ botonGuardar.addEventListener("click", function () {
     botonEliminar.textContent = "Eliminar";
     // Solo habilita eliminar si la publicación pertenece al usuario actual
     const puedeEliminar =
-    usuarioActual !== null &&
-    nuevoGith.usuario === usuarioActual.usuario;
+        usuarioActual !== null &&
+        nuevoGith.usuario === usuarioActual.usuario;
 
-botonEliminar.disabled = !puedeEliminar;
-botonEliminar.hidden = !puedeEliminar;
+    botonEliminar.disabled = !puedeEliminar;
+    botonEliminar.hidden = !puedeEliminar;
 
-// Elimina la publicación del arreglo y actualiza la pantalla
-botonEliminar.addEventListener("click", function () {
-    if (
-        usuarioActual === null ||
-        nuevoGith.usuario !== usuarioActual.usuario
-    ) {
-        return;
-    }
+    // Elimina la publicación del arreglo y actualiza la pantalla
+    botonEliminar.addEventListener("click", function () {
+        if (
+            usuarioActual === null ||
+            nuevoGith.usuario !== usuarioActual.usuario
+        ) {
+            return;
+        }
 
-    const posicion = giths.indexOf(nuevoGith);
+        const posicion = giths.indexOf(nuevoGith);
 
-    if (posicion !== -1) {
-        giths.splice(posicion, 1);
-        mostrarGiths();
-    }
-});
+        if (posicion !== -1) {
+            // Libera las direcciones de los archivos eliminados
+            (nuevoGith.archivos || []).forEach(function (archivo) {
+                URL.revokeObjectURL(archivo.url);
+            });
 
-    // Une los elementos y muestra el Gith
+            giths.splice(posicion, 1);
+            mostrarGiths();
+        }
+    });
+
+    // Une el texto y los botones
     botonMeGusta.append(contador);
     acciones.append(botonMeGusta, botonGuardar, botonEliminar);
 
-    gith.append(encabezado, datos, texto, acciones);
+    gith.append(encabezado, datos, texto);
 
-    return gith; 
-} 
+    // Muestra cada archivo una sola vez
+    (nuevoGith.archivos || []).forEach(function (archivo) {
+        if (archivo.tipo.startsWith("image/")) {
+            const imagen = document.createElement("img");
+            imagen.src = archivo.url;
+            imagen.alt = archivo.nombre;
+            imagen.className = "imagen-gith";
+            gith.append(imagen);
+        } else if (archivo.tipo.startsWith("video/")) {
+            const video = document.createElement("video");
+            video.src = archivo.url;
+            video.controls = true;
+            video.preload = "metadata";
+            video.className = "imagen-gith";
+            gith.append(video);
+        }
+
+        const parrafoArchivo = document.createElement("p");
+        const enlaceArchivo = document.createElement("a");
+
+        enlaceArchivo.href = archivo.url;
+        enlaceArchivo.download = archivo.nombre;
+        enlaceArchivo.textContent = "Descargar: " + archivo.nombre;
+
+        parrafoArchivo.append(enlaceArchivo);
+        gith.append(parrafoArchivo);
+    });
+
+    gith.append(acciones);
+
+    return gith;
+}
+
 
 // Actualiza la lista con las publicaciones del arreglo
 
@@ -254,7 +337,7 @@ function mostrarGiths() {
     });
 
     filtrarPublicaciones();
-} 
+}
 
 // Procesa el formulario de registro
 formularioRegistro.addEventListener("submit", function (evento) {
@@ -274,19 +357,19 @@ formularioRegistro.addEventListener("submit", function (evento) {
         alert("Las contraseñas no coinciden.");
         return;
     }
-    
+
     // Comprueba si el nombre de usuario ya está registrado
     const usuarioExiste = usuarios.some(function (cuenta) {
         return cuenta.usuario === usuario;
-    }); 
+    });
 
     if (usuarioExiste) {
         alert("Ese nombre de usuario ya está registrado.");
         return;
-    } 
+    }
 
     // Crea los datos de la cuenta 
-    const nuevaCuenta =  {
+    const nuevaCuenta = {
         nombre: nombre,
         usuario: usuario,
         contrasena: contrasena,
@@ -295,15 +378,15 @@ formularioRegistro.addEventListener("submit", function (evento) {
     usuarios.push(nuevaCuenta);
 
     formularioRegistro.reset();
-    alert("Cuenta creada. Ya puedes iniciar Sesión."); 
+    alert("Cuenta creada. Ya puedes iniciar Sesión.");
     window.location.hash = "#acceso";
-}); 
+});
 
 // Habilita el botón para el registro
-formularioRegistro.querySelector('button[type="submit"]').disabled = false; 
+formularioRegistro.querySelector('button[type="submit"]').disabled = false;
 
 // Formulario de inicio de sesion y sus campos
-const formularioAcceso =  document.querySelector("#formulario-acceso");
+const formularioAcceso = document.querySelector("#formulario-acceso");
 const accesoUsuario = document.querySelector("#acceso-usuario");
 const accesoContrasena = document.querySelector("#acceso-contrasena");
 
@@ -311,7 +394,7 @@ const accesoContrasena = document.querySelector("#acceso-contrasena");
 formularioAcceso.addEventListener("submit", function (evento) {
 
     evento.preventDefault();
-    
+
     const usuario = accesoUsuario.value.trim();
     const contrasena = accesoContrasena.value;
 
@@ -323,17 +406,17 @@ formularioAcceso.addEventListener("submit", function (evento) {
         alert("El usuario o la contraseña son incorrectos.");
         return;
     }
-        usuarioActual = cuentaEncontrada;
+    usuarioActual = cuentaEncontrada;
 
-        campoUsuario.value = usuarioActual.usuario;
-        campoUsuario.readOnly = true;
+    campoUsuario.value = usuarioActual.usuario;
+    campoUsuario.readOnly = true;
 
-        actualizarInterfazSesion();
-        
-        formularioAcceso.reset();
-        alert("Bienvenido, " + usuarioActual.nombre);
-        window.location.hash = "#publicaciones";
-}); 
+    actualizarInterfazSesion();
+
+    formularioAcceso.reset();
+    alert("Bienvenido, " + usuarioActual.nombre);
+    window.location.hash = "#publicaciones";
+});
 
 // Conecta los botones de las publicaciones de ejemplo
 publicaciones.querySelectorAll(":scope > article")
@@ -412,10 +495,16 @@ publicaciones.querySelectorAll(":scope > article")
     });
 
 // Actualiza el aviso y los botones según la sesión
-// Actualiza el aviso y los botones según la sesión
 function actualizarInterfazSesion() {
-    document.querySelector(".aviso-cuenta").hidden =
-        usuarioActual !== null;
+    const haySesion = usuarioActual !== null;
+
+    document.querySelector(".aviso-cuenta").hidden = haySesion;
+
+    // Oculta la opción completa del menú, incluyendo su espacio
+    document.querySelector('nav a[href="#perfil"]')
+        .closest("li").hidden = !haySesion;
+
+    document.querySelector("#cerrar-sesion").hidden = !haySesion;
 
     publicaciones.querySelectorAll(":scope > article")
         .forEach(function (articulo) {
@@ -489,6 +578,19 @@ selectorFotoPerfil.addEventListener("change", function () {
 });
 
 actualizarInterfazSesion();
+
+// Cierra la sesión actual
+document.querySelector("#cerrar-sesion")
+    .addEventListener("click", function () {
+        usuarioActual = null;
+
+        formulario.reset();
+        campoUsuario.value = "";
+        selectorFotoPerfil.value = "";
+
+        window.location.hash = "#inicio";
+        actualizarInterfazSesion();
+    });
 
 
 
