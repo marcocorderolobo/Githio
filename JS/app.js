@@ -36,6 +36,62 @@ formulario.addEventListener("submit", function (evento) {
     giths.push(nuevoGith);
 
     // Crear el articulo y su contenido
+    const gith = crearArticuloGith(nuevoGith, categoriaValor);
+
+    publicaciones.append(gith);
+    filtrarPublicaciones();
+
+    formulario.reset();
+    window.location.hash = "#publicaciones";
+});
+
+formulario.querySelector('button[type="submit"]').disabled = false; 
+
+// Secciones que funcionan como apartados
+const vistas = document.querySelectorAll(".vista");
+
+// Muestra el apartadp indicado por el enlace
+function mostrarVista() {
+    const destino = window.location.hash || "#inicio";
+    // Comprueba que el destino corresponda a una vista
+    const existe = Array.from(vistas).some(function (vista) {
+        return "#" + vista.id === destino;
+    });
+
+    const vistaActiva = existe ? destino : "#inicio";
+
+    vistas.forEach(function (vista) {
+        vista.hidden = "#" + vista.id !== vistaActiva;
+    }); 
+} 
+
+// Actualiza el apartado cuando cambia el enlace 
+window.addEventListener("hashchange", mostrarVista);
+
+// Selecciona el apartado inicial al cargar 
+mostrarVista(); 
+
+// Selector del filtro de categorías 
+const filtroCategoria = document.querySelector("#filtro-categoria"); 
+
+// Muestra únicamente las publicaciones de la categoría elegida
+function filtrarPublicaciones() {
+    const categoriaElegida = filtroCategoria.value;
+    const articulos = publicaciones.querySelectorAll("article");
+
+    articulos.forEach(function (articulo) {
+        articulo.hidden = categoriaElegida !== "todas" && articulo.dataset.categoria !== categoriaElegida;
+    }); 
+} 
+
+// Aplica el filtro cuando cambia la selección
+filtroCategoria.addEventListener("change", filtrarPublicaciones);
+
+// Aplica la selección inicial 
+filtrarPublicaciones();
+
+// Construye un artículo a partir de los datos de un Gith 
+function crearArticuloGith(nuevoGith, categoriaValor) {
     const gith = document.createElement("article"); 
     gith.dataset.categoria = categoriaValor;
 
@@ -84,54 +140,6 @@ formulario.addEventListener("submit", function (evento) {
     acciones.append(botonMeGusta, botonGuardar, botonEliminar);
 
     gith.append(encabezado, datos, texto, acciones);
-    publicaciones.append(gith);
-    filtrarPublicaciones();
 
-    formulario.reset();
-    window.location.hash = "#publicaciones";
-});
-
-formulario.querySelector('button[type="submit"]').disabled = false; 
-
-// Secciones que funcionan como apartados
-const vistas = document.querySelectorAll(".vista");
-
-// Muestra el apartadp indicado por el enlace
-function mostrarVista() {
-    const destino = window.location.hash || "#inicio";
-    // Comprueba que el destino corresponda a una vista
-    const existe = Array.from(vistas).some(function (vista) {
-        return "#" + vista.id === destino;
-    });
-
-    const vistaActiva = existe ? destino : "#inicio";
-
-    vistas.forEach(function (vista) {
-        vista.hidden = "#" + vista.id !== vistaActiva;
-    }); 
-} 
-
-// Actualiza el apartado cuando cambia el enlace 
-window.addEventListener("hashchange", mostrarVista);
-
-// Selecciona el apartado inicial al cargar 
-mostrarVista() 
-
-// Selector del filtro de categorías 
-const filtroCategoria = document.querySelector("#filtro-categoria"); 
-
-// Muestra únicamente las publicaciones de la categoría elegida
-function filtrarPublicaciones() {
-    const categoriaElegida = filtroCategoria.value;
-    const articulos = publicaciones.querySelectorAll("article");
-
-    articulos.forEach(function (articulo) {
-        articulo.hidden = categoriaElegida !== "todas" && articulo.dataset.categoria !== categoriaElegida;
-    }); 
-} 
-
-// Aplica el filtro cuando cambia la selección
-filtroCategoria.addEventListener("change", filtrarPublicaciones);
-
-// Aplica la selección inicial 
-filtrarPublicaciones();
+    return gith;
+}
