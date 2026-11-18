@@ -1,6 +1,19 @@
 // Dastos de las publicaciones creadas
 const giths = [];
 
+// Cuentas creadas de la página
+const usuarios = [];
+
+// Usuario que tiene la sesión iniciada
+let usuarioActual = null;
+
+// Formulario de registro y sus campos
+const formularioRegistro = document.querySelector("#formulario-registro"); 
+const registroNombre = document.querySelector("#registro-nombre");
+const registroUsuario = document.querySelector("#registro-usuario");
+const registroContrasena = document.querySelector("#registro-contrasena");
+const registroConfirmacion = document.querySelector("#registro-confirmacion");
+
 const formulario = document.querySelector("#formulario-gith");
 const publicaciones = document.querySelector("#publicaciones");
 const listaGiths = document.querySelector("#lista-giths");
@@ -13,7 +26,14 @@ const campoContenido = document.querySelector("#contenido-gith");
 formulario.addEventListener("submit", function (evento) {
     evento.preventDefault();
 
-    const usuario = campoUsuario.value.trim();
+    // Solo permite publicar con una sesión iniciada
+    if (usuarioActual === null) {
+        alert("Inicia sesión para publicar un Gith.");
+        window.location.hash = "#acceso";
+        return;
+    }
+
+    const usuario = usuarioActual.usuario;
     const titulo = campoTitulo.value.trim();
     const contenido = campoContenido.value.trim();
     const categoria = campoCategoria.selectedOptions[0].textContent;
@@ -31,7 +51,7 @@ formulario.addEventListener("submit", function (evento) {
         contenido: contenido,
         categoria: categoria,
         categoriaValor: categoriaValor,
-        meGusta: 0
+        meGusta: 0,
     };
 
     // Eso agrega la publicación al arreglo
@@ -41,6 +61,7 @@ formulario.addEventListener("submit", function (evento) {
     mostrarGiths();
 
     formulario.reset();
+    campoUsuario.value = usuarioActual.usuario;
     window.location.hash = "#publicaciones";
 });
 
@@ -97,8 +118,27 @@ function crearArticuloGith(nuevoGith) {
     const encabezado = document.createElement("h3");
     encabezado.textContent = nuevoGith.titulo; 
 
-    const datos = document.createElement("p");
-    datos.textContent = "Por " + nuevoGith.usuario + " · " + nuevoGith.categoria; 
+    // Foto y nombre del autor
+    const datos = document.createElement("div");
+    datos.className = "autor-gith";
+    
+    const cuentaAutor = usuarios.find(function (cuenta) {
+        return cuenta.usuario === nuevoGith.usuario;
+    });
+    
+    const fotoAutor = document.createElement("img");
+    fotoAutor.className = "foto-autor";
+    fotoAutor.src =
+        cuentaAutor && cuentaAutor.foto
+            ? cuentaAutor.foto
+            : fotoPredeterminada;
+    fotoAutor.alt = "Avatar de " + nuevoGith.usuario;
+    
+    const nombreAutor = document.createElement("p");
+    nombreAutor.textContent =
+        "Por " + nuevoGith.usuario + " · " + nuevoGith.categoria;
+    
+    datos.append(fotoAutor, nombreAutor);
 
     const texto = document.createElement("p");
     texto.textContent = nuevoGith.contenido; 
@@ -112,7 +152,7 @@ function crearArticuloGith(nuevoGith) {
     const botonMeGusta = document.createElement("button");
     botonMeGusta.type = "button";
     botonMeGusta.className = "boton-me-gusta";
-    botonMeGusta.disabled = true;
+    botonMeGusta.disabled = usuarioActual === null;
     botonMeGusta.textContent = "Me gusta : "; 
 
     // Contador dentro del botón 
@@ -120,19 +160,79 @@ function crearArticuloGith(nuevoGith) {
     contador.className = "contador-me-gusta";
     contador.textContent = nuevoGith.meGusta; 
 
-    // Boton para guardar 
-    const botonGuardar = document.createElement("button");
-    botonGuardar.type = "button"; 
-    botonGuardar.className = "boton-guardar";
-    botonGuardar.disabled = true;
-    botonGuardar.textContent = "Guardar";
+    // Aumenta los me gusta y actualiza el contador
+    botonMeGusta.addEventListener("click", function () {
+    if (usuarioActual === null) {
+        return;
+    }
+
+    nuevoGith.meGusta += 1;
+    contador.textContent = nuevoGith.meGusta;
+    });
+
+    // Usuarios que guardaron esta publicación
+if (!nuevoGith.guardados) {
+    nuevoGith.guardados = [];
+}
+
+// Botón para guardar
+const botonGuardar = document.createElement("button");
+botonGuardar.type = "button";
+botonGuardar.className = "boton-guardar";
+botonGuardar.disabled = usuarioActual === null;
+
+const estaGuardado =
+    usuarioActual !== null &&
+    nuevoGith.guardados.includes(usuarioActual.usuario);
+
+botonGuardar.textContent = estaGuardado ? "Guardado ✓" : "Guardar";
+
+botonGuardar.addEventListener("click", function () {
+    if (usuarioActual === null) {
+        return;
+    }
+
+    const posicion =
+        nuevoGith.guardados.indexOf(usuarioActual.usuario);
+
+    if (posicion === -1) {
+        nuevoGith.guardados.push(usuarioActual.usuario);
+    } else {
+        nuevoGith.guardados.splice(posicion, 1);
+    }
+
+    mostrarGiths();
+});
 
     // Botón para eliminar 
     const botonEliminar = document.createElement("button");
     botonEliminar.type = "button";
     botonEliminar.className = "boton-eliminar";
-    botonEliminar.disabled = true;
     botonEliminar.textContent = "Eliminar";
+    // Solo habilita eliminar si la publicación pertenece al usuario actual
+    const puedeEliminar =
+    usuarioActual !== null &&
+    nuevoGith.usuario === usuarioActual.usuario;
+
+botonEliminar.disabled = !puedeEliminar;
+botonEliminar.hidden = !puedeEliminar;
+
+// Elimina la publicación del arreglo y actualiza la pantalla
+botonEliminar.addEventListener("click", function () {
+    if (
+        usuarioActual === null ||
+        nuevoGith.usuario !== usuarioActual.usuario
+    ) {
+        return;
+    }
+
+    const posicion = giths.indexOf(nuevoGith);
+
+    if (posicion !== -1) {
+        giths.splice(posicion, 1);
+        mostrarGiths();
+    }
+});
 
     // Une los elementos y muestra el Gith
     botonMeGusta.append(contador);
@@ -154,4 +254,242 @@ function mostrarGiths() {
     });
 
     filtrarPublicaciones();
+} 
+
+// Procesa el formulario de registro
+formularioRegistro.addEventListener("submit", function (evento) {
+    evento.preventDefault();
+
+    const nombre = registroNombre.value.trim();
+    const usuario = registroUsuario.value.trim();
+    const contrasena = registroContrasena.value;
+    const confirmacion = registroConfirmacion.value;
+
+    if (nombre === "" || usuario === "") {
+        alert("Escribe tu nombre y tu nombre de usuario.");
+        return;
+    }
+
+    if (contrasena !== confirmacion) {
+        alert("Las contraseñas no coinciden.");
+        return;
+    }
+    
+    // Comprueba si el nombre de usuario ya está registrado
+    const usuarioExiste = usuarios.some(function (cuenta) {
+        return cuenta.usuario === usuario;
+    }); 
+
+    if (usuarioExiste) {
+        alert("Ese nombre de usuario ya está registrado.");
+        return;
+    } 
+
+    // Crea los datos de la cuenta 
+    const nuevaCuenta =  {
+        nombre: nombre,
+        usuario: usuario,
+        contrasena: contrasena,
+    };
+
+    usuarios.push(nuevaCuenta);
+
+    formularioRegistro.reset();
+    alert("Cuenta creada. Ya puedes iniciar Sesión."); 
+    window.location.hash = "#acceso";
+}); 
+
+// Habilita el botón para el registro
+formularioRegistro.querySelector('button[type="submit"]').disabled = false; 
+
+// Formulario de inicio de sesion y sus campos
+const formularioAcceso =  document.querySelector("#formulario-acceso");
+const accesoUsuario = document.querySelector("#acceso-usuario");
+const accesoContrasena = document.querySelector("#acceso-contrasena");
+
+// Comprueba los datos al iniciar sesión
+formularioAcceso.addEventListener("submit", function (evento) {
+
+    evento.preventDefault();
+    
+    const usuario = accesoUsuario.value.trim();
+    const contrasena = accesoContrasena.value;
+
+    const cuentaEncontrada = usuarios.find(function (cuenta) {
+        return cuenta.usuario === usuario && cuenta.contrasena === contrasena;
+    });
+
+    if (cuentaEncontrada === undefined) {
+        alert("El usuario o la contraseña son incorrectos.");
+        return;
+    }
+        usuarioActual = cuentaEncontrada;
+
+        campoUsuario.value = usuarioActual.usuario;
+        campoUsuario.readOnly = true;
+
+        actualizarInterfazSesion();
+        
+        formularioAcceso.reset();
+        alert("Bienvenido, " + usuarioActual.nombre);
+        window.location.hash = "#publicaciones";
+}); 
+
+// Conecta los botones de las publicaciones de ejemplo
+publicaciones.querySelectorAll(":scope > article")
+    .forEach(function (articulo) {
+        const botonMeGusta = articulo.querySelector(".boton-me-gusta");
+        const contador = articulo.querySelector(".contador-me-gusta");
+        const botonGuardar = articulo.querySelector(".boton-guardar");
+        const botonEliminar = articulo.querySelector(".boton-eliminar");
+
+        const gustos = [];
+        const guardados = [];
+
+        // Los ejemplos no pertenecen a una cuenta registrada
+        botonEliminar.hidden = true;
+        botonEliminar.disabled = true;
+
+        function actualizarBotones() {
+            const sinSesion = usuarioActual === null;
+
+            botonMeGusta.disabled = sinSesion;
+            botonGuardar.disabled = sinSesion;
+            contador.textContent = gustos.length;
+
+            const estaGuardado =
+                !sinSesion &&
+                guardados.includes(usuarioActual.usuario);
+
+            botonGuardar.textContent =
+                estaGuardado ? "Guardado ✓" : "Guardar";
+
+            const tieneMeGusta =
+                !sinSesion &&
+                gustos.includes(usuarioActual.usuario);
+
+            botonMeGusta.setAttribute(
+                "aria-pressed",
+                String(tieneMeGusta)
+            );
+        }
+
+        botonMeGusta.addEventListener("click", function () {
+            if (usuarioActual === null) return;
+
+            const posicion = gustos.indexOf(usuarioActual.usuario);
+
+            if (posicion === -1) {
+                gustos.push(usuarioActual.usuario);
+            } else {
+                gustos.splice(posicion, 1);
+            }
+
+            actualizarBotones();
+        });
+
+        botonGuardar.addEventListener("click", function () {
+            if (usuarioActual === null) return;
+
+            const posicion = guardados.indexOf(usuarioActual.usuario);
+
+            if (posicion === -1) {
+                guardados.push(usuarioActual.usuario);
+            } else {
+                guardados.splice(posicion, 1);
+            }
+
+            actualizarBotones();
+        });
+
+        // Permite actualizar estos botones al iniciar sesión
+        articulo.addEventListener(
+            "actualizar-sesion",
+            actualizarBotones
+        );
+
+        actualizarBotones();
+    });
+
+// Actualiza el aviso y los botones según la sesión
+// Actualiza el aviso y los botones según la sesión
+function actualizarInterfazSesion() {
+    document.querySelector(".aviso-cuenta").hidden =
+        usuarioActual !== null;
+
+    publicaciones.querySelectorAll(":scope > article")
+        .forEach(function (articulo) {
+            articulo.dispatchEvent(new Event("actualizar-sesion"));
+        });
+
+    actualizarPerfil();
+    mostrarGiths();
 }
+
+
+
+// Foto del perfil y selector de imagen
+const imagenPerfil = document.querySelector(".avatar-perfil");
+const selectorFotoPerfil = document.querySelector("#foto-perfil");
+const fotoPredeterminada = imagenPerfil.getAttribute("src");
+
+// Muestra los datos de la cuenta en el perfil
+function actualizarPerfil() {
+    selectorFotoPerfil.disabled = usuarioActual === null;
+
+    if (usuarioActual === null) {
+        return;
+    }
+
+    document.querySelector(".encabezado-perfil h3").textContent =
+        usuarioActual.nombre;
+
+    document.querySelector(".encabezado-perfil p").textContent =
+        "@" + usuarioActual.usuario;
+
+    imagenPerfil.src = usuarioActual.foto || fotoPredeterminada;
+    imagenPerfil.alt = "Avatar de " + usuarioActual.nombre;
+}
+
+// Cambia la foto de la cuenta actual
+selectorFotoPerfil.addEventListener("change", function () {
+    if (usuarioActual === null) {
+        return;
+    }
+
+    const archivo = selectorFotoPerfil.files[0];
+
+    if (!archivo) {
+        return;
+    }
+
+    if (!archivo.type.startsWith("image/")) {
+        alert("Selecciona una imagen.");
+        selectorFotoPerfil.value = "";
+        return;
+    }
+
+    // Guarda la cuenta que inició la selección
+    const cuenta = usuarioActual;
+    const lector = new FileReader();
+
+    lector.addEventListener("load", function () {
+        cuenta.foto = lector.result;
+
+        actualizarPerfil();
+        mostrarGiths();
+    });
+
+    lector.addEventListener("error", function () {
+        alert("No se pudo leer la imagen.");
+    });
+
+    lector.readAsDataURL(archivo);
+    selectorFotoPerfil.value = "";
+});
+
+actualizarInterfazSesion();
+
+
+
+

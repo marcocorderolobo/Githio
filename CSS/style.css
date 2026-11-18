@@ -613,6 +613,31 @@ label[for="foto-perfil"] {
     display: none;
 }
 
+/* Oculta los botones y avisos marcados desde JavaScript */
+[hidden] {
+    display: none !important;
+} 
+
+/* Foto junto al nombre del autor */
+.autor-gith {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 12px 0;
+}
+
+.autor-gith p {
+    margin: 0;
+}
+
+.foto-autor {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
 /* Ajustes para pantallas de hasta 700 pixeles */
 @media (max-width: 700px) {
     body, body:has(#menu-lateral[open]) {
@@ -662,4 +687,5 @@ label[for="foto-perfil"] {
     .ilustracion-portada {
         display: none;
     }
-}
+} 
+
